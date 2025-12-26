@@ -29,9 +29,16 @@
     }
 
     function getResults() {
-        return [...document.querySelectorAll(".g, .MjjYud")]
-            .filter(r => r.querySelector("a[href]:has(h3)"));
+        return Array.from(document.querySelectorAll(".g, .MjjYud")).filter(el =>
+            el.querySelector("a[href]:has(h3)") &&              // must have organic title link
+            !el.closest("[data-text-ad]") &&                    // exclude ads
+            !el.querySelector("g-section-with-header") &&       // exclude featured sections
+            !el.querySelector(".VjDLd") &&                      // exclude people also ask
+            !el.querySelector(".fP1Qef") &&                     // exclude carousels
+            !el.querySelector(".Wt5Tfe")                         // exclude other widgets
+        );
     }
+
 
     function baseRank(pages, start) {
         return Object.keys(pages)
