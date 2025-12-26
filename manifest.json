@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "author": "Saurabh Kumar",
+    "name": "Seo Rank Help",
+    "version": "1.0.2",
+    "description": "This is the seo rank checker for seo's",
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "https://www.google.com/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.google.com/search*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "css": [
+                "styles.css"
+            ]
+        }
+    ]
+}
