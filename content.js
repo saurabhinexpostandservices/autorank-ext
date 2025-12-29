@@ -29,7 +29,7 @@
     }
 
     function getResults() {
-        return Array.from(document.querySelectorAll(".g, .MjjYud")).filter(el =>
+        return Array.from(document.querySelectorAll(".g, .MjjYud, .A6K0A")).filter(el =>
             el.querySelector("a[href]:has(h3)") &&              // must have organic title link
             !el.closest("[data-text-ad]") &&                    // exclude ads
             !el.querySelector("g-section-with-header") &&       // exclude featured sections
