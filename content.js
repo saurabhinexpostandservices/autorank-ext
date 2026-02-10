@@ -29,14 +29,24 @@
     }
 
     function getResults() {
-        return Array.from(document.querySelectorAll(".g, .MjjYud, .A6K0A")).filter(el =>
-            el.querySelector("a[href]:has(h3)") &&              // must have organic title link
-            !el.closest("[data-text-ad]") &&                    // exclude ads
-            !el.querySelector("g-section-with-header") &&       // exclude featured sections
-            !el.querySelector(".VjDLd") &&                      // exclude people also ask
-            !el.querySelector(".fP1Qef") &&                     // exclude carousels
-            !el.querySelector(".Wt5Tfe")                         // exclude other widgets
-        );
+        // Hum sirf un main containers ko target kar rahe hain jo organic results hain
+        const allBlocks = Array.from(document.querySelectorAll(".g, .MjjYud, .A6K0A"));
+
+        return allBlocks.filter(el => {
+            // 1. Check karein ki result ke andar h3 (Title) aur organic link hai
+            const hasTitle = el.querySelector("h3");
+            const hasLink = el.querySelector("a[href]");
+
+            // 2. Main fix: Yeh check karta hai ki ye container kisi aur 
+            // organic result ke ANDAR to nahi hai (Double counting rokne ke liye)
+            const isNested = el.parentElement.closest(".g, .MjjYud, .A6K0A");
+
+            // 3. Unwanted widgets aur Ads ko bahar nikalna
+            const isAd = el.closest("[data-text-ad]");
+            const isWidget = el.querySelector("g-section-with-header, .VjDLd, .fP1Qef, .Wt5Tfe");
+
+            return hasTitle && hasLink && !isNested && !isAd && !isWidget;
+        });
     }
 
 
@@ -175,3 +185,14 @@
     })();
 
 })();
+
+// function getResults() {
+//         return Array.from(document.querySelectorAll(".g, .MjjYud, .A6K0A")).filter(el =>
+//             el.querySelector("a[href]:has(h3)") &&              // must have organic title link
+//             !el.closest("[data-text-ad]") &&                    // exclude ads
+//             !el.querySelector("g-section-with-header") &&       // exclude featured sections
+//             !el.querySelector(".VjDLd") &&                      // exclude people also ask
+//             !el.querySelector(".fP1Qef") &&                     // exclude carousels
+//             !el.querySelector(".Wt5Tfe")                         // exclude other widgets
+//         );
+//     }
